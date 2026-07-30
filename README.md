@@ -55,6 +55,23 @@ Adds two floating-point values by aligning their exponents, shifting the smaller
 - Program 2: **37/37**
 - Program 3: **12/12**
 
+## Hardware / Software Files
+
+### Top Module
+-
+
+### Testbenches & Dummy DUTs
+-
+
+### Memory Initialization (per program)
+-
+
+### Program Initialization (machine code)
+-
+
+### Assembler
+-
+
 ## Authors
 
 **Maddux Madayag & Yu-Han Lou**
