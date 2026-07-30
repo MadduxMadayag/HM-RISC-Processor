@@ -49,28 +49,52 @@ Converts the custom floating-point format back into a signed 16-bit fixed-point 
 ### Program 3 – Floating-Point Addition
 Adds two floating-point values by aligning their exponents, shifting the smaller mantissa, performing the addition, normalizing the result, and storing the final floating-point value back to memory.
 
-## Results
+## Results / Outputs
 
+-
+-
+-
 - Program 1: **101/101**
 - Program 2: **37/37**
 - Program 3: **12/12**
 
+
 ## Hardware / Software Files
 
 ### Top Module
--
+- `TopLevel.sv`
+- `Alu.sv`
+- `ControlUnit.sv`
+- `DM.sv`
+- `data_mem.sv`
+- `InstructionROM.sv`
+- `ProgramCounter.sv`
+- `RegFile.sv`
+- `Rr1Mux.sv`
+- `WriteDMux.sv`
+- `WriteRMux.sv`
 
-### Testbenches & Dummy DUTs
--
+
+### Testbenches
+- `Program_1/new_fix2flt_tb.sv`
+- `Program_2/flt2fix_tb_noround.sv`
+- `Program_3/fltflt_no_rnd_tb.sv`
 
 ### Memory Initialization (per program)
--
+- `Program_1/P1TLUT.txt`
+- `Program_2/P2TLUT.txt`
+- `Program_3/P3TLUT.txt`
 
 ### Program Initialization (machine code)
--
+- `Program_1/P1Tmachinecode.txt`
+- `Program_2/P2Tmachinecode.txt`
+- `Program_3/P3Tmachinecode.txt`
 
 ### Assembler
--
+- `Assembly/assembler2.py` — assembler program
+- `Assembly/P1Assembly.txt`
+- `Assembly/P2Assembly.txt`
+- `Assembly/P3Assembly.txt`
 
 ## Authors
 
