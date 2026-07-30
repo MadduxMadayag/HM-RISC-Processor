@@ -1,0 +1,910 @@
+QuestaSim-64 qrun 2024.3_1 Utility 2024.10 Oct 17 2024
+Start time: 16:13:52 on Jun 03,2025
+qrun -batch -access=rw+/. -timescale 1ns/1ns -mfcu design.sv testbench.sv -voptargs="+acc=npr" -do " run -all; exit" 
+Creating library 'qrun.out/work'.
+QuestaSim-64 vlog 2024.3_1 Compiler 2024.10 Oct 17 2024
+Start time: 16:13:52 on Jun 03,2025
+vlog -timescale 1ns/1ns -mfcu design.sv testbench.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
+-- Compiling module TopLevel
+-- Compiling module TopLevel0
+-- Compiling module Alu
+-- Compiling module ControlUnit
+-- Compiling module DM
+-- Compiling module data_mem
+-- Compiling module InstructionROM
+-- Compiling module Lut
+-- Compiling module ProgramCounter
+-- Compiling module RegFile
+-- Compiling module Rr1Mux
+-- Compiling module WriteDMux
+-- Compiling module WriteRMux
+-- Compiling module new_int2flt_tb
+
+Top level modules:
+	new_int2flt_tb
+End time: 16:13:52 on Jun 03,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim-64 vopt 2024.3_1 Compiler 2024.10 Oct 17 2024
+** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+Start time: 16:13:52 on Jun 03,2025
+vopt -access=rw+/. -timescale 1ns/1ns -mfcu "+acc=npr" -findtoplevels qrun.out/work+1+ -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=2 
+
+Top level modules:
+	new_int2flt_tb
+
+Analyzing design...
+-- Loading module new_int2flt_tb
+-- Loading module TopLevel
+-- Loading module ProgramCounter
+-- Loading module InstructionROM
+-- Loading module ControlUnit
+-- Loading module Lut
+-- Loading module RegFile
+-- Loading module Alu
+-- Loading module Rr1Mux
+-- Loading module WriteRMux
+-- Loading module WriteDMux
+-- Loading module DM
+-- Loading module TopLevel0
+-- Loading module data_mem
+Optimizing 14 design-units (inlining 0/14 module instances):
+-- Optimizing module new_int2flt_tb(fast)
+-- Optimizing module ControlUnit(fast)
+-- Optimizing module Alu(fast)
+-- Optimizing module TopLevel(fast)
+-- Optimizing module TopLevel0(fast)
+-- Optimizing module RegFile(fast)
+-- Optimizing module data_mem(fast)
+-- Optimizing module WriteRMux(fast)
+-- Optimizing module DM(fast)
+-- Optimizing module WriteDMux(fast)
+-- Optimizing module ProgramCounter(fast)
+-- Optimizing module Rr1Mux(fast)
+-- Optimizing module Lut(fast)
+-- Optimizing module InstructionROM(fast)
+Optimized design name is qrun_opt
+End time: 16:13:53 on Jun 03,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 1
+# vsim -batch -lib qrun.out/work -do " run -all; exit" -statslog qrun.out/stats_log qrun_opt -appendlog -l qrun.log 
+# Start time: 16:13:53 on Jun 03,2025
+# //  Questa Sim-64
+# //  Version 2024.3_1 linux_x86_64 Oct 17 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.new_int2flt_tb(fast)
+# Loading work.TopLevel(fast)
+# Loading work.ProgramCounter(fast)
+# Loading work.InstructionROM(fast)
+# Loading work.ControlUnit(fast)
+# Loading work.Lut(fast)
+# Loading work.RegFile(fast)
+# Loading work.Alu(fast)
+# Loading work.Rr1Mux(fast)
+# Loading work.WriteRMux(fast)
+# Loading work.WriteDMux(fast)
+# Loading work.DM(fast)
+# Loading work.TopLevel0(fast)
+# Loading work.data_mem(fast)
+# 
+# run -all
+# This test case 0000000000000000 
+# 
+# data_mem.core0, 1 = xxxxxxxx  xxxxxxxx                    0
+# data_mem.core0, 1 = 00000000  xxxxxxxx                   45
+# data_mem.core0, 1 = 00000000  00000000                  155
+# what's feeding the case 0000000000000000
+# IN=0x0000,  DUT=0x0000000000000000, REF=0x0000000000000000, MATH=0x0000000000000000
+# Scores so far: vs REF=1, vs MATH=1, tests=1
+# This test case 1000000000000000 
+# 
+# data_mem.core0, 1 = 11011000  00000000                20095
+# data_mem.core0, 1 = 11011000  10000000                20495
+# data_mem.core0, 1 = 11011000  11011000                21855
+# what's feeding the case 1000000000000000
+# IN=0x8000,  DUT=0x1101100000000000, REF=0x1101100000000000, MATH=0x1101100000000000
+# Scores so far: vs REF=2, vs MATH=2, tests=2
+# This test case 0000000000000010 
+# 
+# data_mem.core0, 1 = 00100000  11011000                40145
+# data_mem.core0, 1 = 00100000  00000000                40385
+# data_mem.core0, 1 = 00100000  00100000                42285
+# what's feeding the case 0000000000000010
+# IN=0x0002,  DUT=0x0010000000000000, REF=0x0010000000000000, MATH=0x0010000000000000
+# Scores so far: vs REF=3, vs MATH=3, tests=3
+# This test case 0000000000000011 
+# 
+# data_mem.core0, 1 = 00100010  00100000                60195
+# data_mem.core0, 1 = 00100010  00000000                60435
+# data_mem.core0, 1 = 00100010  00100010                62335
+# what's feeding the case 0000000000000011
+# IN=0x0003,  DUT=0x0010001000000000, REF=0x0010001000000000, MATH=0x0010001000000000
+# Scores so far: vs REF=4, vs MATH=4, tests=4
+# This test case 0000000000001100 
+# 
+# data_mem.core0, 1 = 00101010  00100010                80245
+# data_mem.core0, 1 = 00101010  00000000                80485
+# data_mem.core0, 1 = 00101010  00101010                82085
+# what's feeding the case 0000000000001100
+# IN=0x000c,  DUT=0x0010101000000000, REF=0x0010101000000000, MATH=0x0010101000000000
+# Scores so far: vs REF=5, vs MATH=5, tests=5
+# This test case 0000000000110000 
+# 
+# data_mem.core0, 1 = 00110010  00101010               100295
+# data_mem.core0, 1 = 00110010  00000000               100535
+# data_mem.core0, 1 = 00110010  00110010               101835
+# what's feeding the case 0000000000110000
+# IN=0x0030,  DUT=0x0011001000000000, REF=0x0011001000000000, MATH=0x0011001000000000
+# Scores so far: vs REF=6, vs MATH=6, tests=6
+# This test case 0001111111111111 
+# 
+# data_mem.core0, 1 = 01001111  00110010               120345
+# data_mem.core0, 1 = 01001111  00000000               120585
+# data_mem.core0, 1 = 01001111  01001111               121405
+# what's feeding the case 0001111111111111
+# IN=0x1fff,  DUT=0x0100111111111111, REF=0x0100111111111111, MATH=0x0100111111111111
+# Scores so far: vs REF=7, vs MATH=7, tests=7
+# This test case 0011111111111111 
+# 
+# data_mem.core0, 1 = 01010011  01001111               140395
+# data_mem.core0, 1 = 01010011  00000000               140635
+# data_mem.core0, 1 = 01010011  01010011               141605
+# what's feeding the case 0011111111111111
+# IN=0x3fff,  DUT=0x0101001111111111, REF=0x0101001111111111, MATH=0x0101001111111111
+# Scores so far: vs REF=8, vs MATH=8, tests=8
+# This test case 0111111111111111 
+# 
+# data_mem.core0, 1 = 01010111  01010011               160445
+# data_mem.core0, 1 = 01010111  00000000               160685
+# data_mem.core0, 1 = 01010111  01010111               161805
+# what's feeding the case 0111111111111111
+# IN=0x7fff,  DUT=0x0101011111111111, REF=0x0101011111111111, MATH=0x0101011111111111
+# Scores so far: vs REF=9, vs MATH=9, tests=9
+# This test case 1111111111111111 
+# 
+# data_mem.core0, 1 = 10011100  01010111               180495
+# data_mem.core0, 1 = 10011100  10000000               180735
+# data_mem.core0, 1 = 10011100  10011100               182875
+# what's feeding the case 1111111111111111
+# IN=0xffff,  DUT=0x1001110000000000, REF=0x1001110000000000, MATH=0x1001110000000000
+# Scores so far: vs REF=10, vs MATH=10, tests=10
+# This test case 1111111111111110 
+# 
+# data_mem.core0, 1 = 10100000  10011100               200545
+# data_mem.core0, 1 = 10100000  10000000               200785
+# data_mem.core0, 1 = 10100000  10100000               202775
+# what's feeding the case 1111111111111110
+# IN=0xfffe,  DUT=0x1010000000000000, REF=0x1010000000000000, MATH=0x1010000000000000
+# Scores so far: vs REF=11, vs MATH=11, tests=11
+# This test case 1111111111111101 
+# 
+# data_mem.core0, 1 = 10100010  10100000               220595
+# data_mem.core0, 1 = 10100010  10000000               220835
+# data_mem.core0, 1 = 10100010  10100010               222825
+# what's feeding the case 1111111111111101
+# IN=0xfffd,  DUT=0x1010001000000000, REF=0x1010001000000000, MATH=0x1010001000000000
+# Scores so far: vs REF=12, vs MATH=12, tests=12
+# This test case 1111111111110100 
+# 
+# data_mem.core0, 1 = 10101010  10100010               240645
+# data_mem.core0, 1 = 10101010  10000000               240885
+# data_mem.core0, 1 = 10101010  10101010               242575
+# what's feeding the case 1111111111110100
+# IN=0xfff4,  DUT=0x1010101000000000, REF=0x1010101000000000, MATH=0x1010101000000000
+# Scores so far: vs REF=13, vs MATH=13, tests=13
+# This test case 1111111111010000 
+# 
+# data_mem.core0, 1 = 10110010  10101010               260695
+# data_mem.core0, 1 = 10110010  10000000               260935
+# data_mem.core0, 1 = 10110010  10110010               262325
+# what's feeding the case 1111111111010000
+# IN=0xffd0,  DUT=0x1011001000000000, REF=0x1011001000000000, MATH=0x1011001000000000
+# Scores so far: vs REF=14, vs MATH=14, tests=14
+# This test case 1100000000000000 
+# 
+# data_mem.core0, 1 = 11010100  10110010               280745
+# data_mem.core0, 1 = 11010100  10000000               281145
+# data_mem.core0, 1 = 11010100  11010100               282355
+# what's feeding the case 1100000000000000
+# IN=0xc000,  DUT=0x1101010000000000, REF=0x1101010000000000, MATH=0x1101010000000000
+# Scores so far: vs REF=15, vs MATH=15, tests=15
+# This test case 0100000000000000 
+# 
+# data_mem.core0, 1 = 01010100  11010100               300795
+# data_mem.core0, 1 = 01010100  00000000               301195
+# data_mem.core0, 1 = 01010100  01010100               302315
+# what's feeding the case 0100000000000000
+# IN=0x4000,  DUT=0x0101010000000000, REF=0x0101010000000000, MATH=0x0101010000000000
+# Scores so far: vs REF=16, vs MATH=16, tests=16
+# This test case 1000000000000000 
+# 
+# data_mem.core0, 1 = 11011000  01010100               320845
+# data_mem.core0, 1 = 11011000  10000000               321245
+# data_mem.core0, 1 = 11011000  11011000               322605
+# what's feeding the case 1000000000000000
+# IN=0x8000,  DUT=0x1101100000000000, REF=0x1101100000000000, MATH=0x1101100000000000
+# Scores so far: vs REF=17, vs MATH=17, tests=17
+# This test case 1000000000000001 
+# 
+# data_mem.core0, 1 = 11010111  11011000               340895
+# data_mem.core0, 1 = 11010111  10000000               341135
+# data_mem.core0, 1 = 11010111  11010111               342345
+# what's feeding the case 1000000000000001
+# IN=0x8001,  DUT=0x1101011111111111, REF=0x1101011111111111, MATH=0x1101011111111111
+# Scores so far: vs REF=18, vs MATH=18, tests=18
+# This test case 0011010100100100 
+# 
+# data_mem.core0, 1 = 01010010  11010111               360945
+# data_mem.core0, 1 = 01010010  00000000               361185
+# data_mem.core0, 1 = 01010010  01010010               362155
+# what's feeding the case 0011010100100100
+# IN=0x3524,  DUT=0x0101001010100100, REF=0x0101001010100100, MATH=0x0101001010100100
+# Scores so far: vs REF=19, vs MATH=19, tests=19
+# This test case 0101111010000001 
+# 
+# data_mem.core0, 1 = 01010101  01010010               380995
+# data_mem.core0, 1 = 01010101  00000000               381235
+# data_mem.core0, 1 = 01010101  01010101               382355
+# what's feeding the case 0101111010000001
+# IN=0x5e81,  DUT=0x0101010111101000, REF=0x0101010111101000, MATH=0x0101010111101000
+# Scores so far: vs REF=20, vs MATH=20, tests=20
+# This test case 0101011000001001 
+# 
+# data_mem.core0, 1 = 01010101  00000000               401285
+# data_mem.core0, 1 = 01010101  01010101               402405
+# what's feeding the case 0101011000001001
+# IN=0x5609,  DUT=0x0101010101100000, REF=0x0101010101100000, MATH=0x0101010101100000
+# Scores so far: vs REF=21, vs MATH=21, tests=21
+# This test case 0101011001100011 
+# 
+# data_mem.core0, 1 = 01010101  00000000               421335
+# data_mem.core0, 1 = 01010101  01010101               422455
+# what's feeding the case 0101011001100011
+# IN=0x5663,  DUT=0x0101010101100110, REF=0x0101010101100110, MATH=0x0101010101100110
+# Scores so far: vs REF=22, vs MATH=22, tests=22
+# This test case 0111101100001101 
+# 
+# data_mem.core0, 1 = 01010111  01010101               441145
+# data_mem.core0, 1 = 01010111  00000000               441385
+# data_mem.core0, 1 = 01010111  01010111               442505
+# what's feeding the case 0111101100001101
+# IN=0x7b0d,  DUT=0x0101011110110000, REF=0x0101011110110000, MATH=0x0101011110110000
+# Scores so far: vs REF=23, vs MATH=23, tests=23
+# This test case 0001100110001101 
+# 
+# data_mem.core0, 1 = 01001110  01010111               461195
+# data_mem.core0, 1 = 01001110  00000000               461435
+# data_mem.core0, 1 = 01001110  01001110               462255
+# what's feeding the case 0001100110001101
+# IN=0x198d,  DUT=0x0100111001100011, REF=0x0100111001100011, MATH=0x0100111001100011
+# Scores so far: vs REF=24, vs MATH=24, tests=24
+# This test case 0000010001100101 
+# 
+# data_mem.core0, 1 = 01000100  01001110               481245
+# data_mem.core0, 1 = 01000100  00000000               481485
+# data_mem.core0, 1 = 01000100  01000100               481875
+# what's feeding the case 0000010001100101
+# IN=0x0465,  DUT=0x0100010001100101, REF=0x0100010001100101, MATH=0x0100010001100101
+# Scores so far: vs REF=25, vs MATH=25, tests=25
+# This test case 0101001000010010 
+# 
+# data_mem.core0, 1 = 01010101  01000100               501295
+# data_mem.core0, 1 = 01010101  00000000               501535
+# data_mem.core0, 1 = 01010101  01010101               502655
+# what's feeding the case 0101001000010010
+# IN=0x5212,  DUT=0x0101010100100001, REF=0x0101010100100001, MATH=0x0101010100100001
+# Scores so far: vs REF=26, vs MATH=26, tests=26
+# This test case 0110001100000001 
+# 
+# data_mem.core0, 1 = 01010110  01010101               521345
+# data_mem.core0, 1 = 01010110  00000000               521585
+# data_mem.core0, 1 = 01010110  01010110               522705
+# what's feeding the case 0110001100000001
+# IN=0x6301,  DUT=0x0101011000110000, REF=0x0101011000110000, MATH=0x0101011000110000
+# Scores so far: vs REF=27, vs MATH=27, tests=27
+# This test case 0100110100001101 
+# 
+# data_mem.core0, 1 = 01010100  01010110               541395
+# data_mem.core0, 1 = 01010100  00000000               541635
+# data_mem.core0, 1 = 01010100  01010100               542755
+# what's feeding the case 0100110100001101
+# IN=0x4d0d,  DUT=0x0101010011010000, REF=0x0101010011010000, MATH=0x0101010011010000
+# Scores so far: vs REF=28, vs MATH=28, tests=28
+# This test case 0111000101110110 
+# 
+# data_mem.core0, 1 = 01010111  01010100               561445
+# data_mem.core0, 1 = 01010111  00000000               561685
+# data_mem.core0, 1 = 01010111  01010111               562805
+# what's feeding the case 0111000101110110
+# IN=0x7176,  DUT=0x0101011100010111, REF=0x0101011100010111, MATH=0x0101011100010111
+# Scores so far: vs REF=29, vs MATH=29, tests=29
+# This test case 0100110100111101 
+# 
+# data_mem.core0, 1 = 01010100  01010111               581495
+# data_mem.core0, 1 = 01010100  00000000               581735
+# data_mem.core0, 1 = 01010100  01010100               582855
+# what's feeding the case 0100110100111101
+# IN=0x4d3d,  DUT=0x0101010011010011, REF=0x0101010011010011, MATH=0x0101010011010011
+# Scores so far: vs REF=30, vs MATH=30, tests=30
+# This test case 0101011111101101 
+# 
+# data_mem.core0, 1 = 01010101  01010100               601545
+# data_mem.core0, 1 = 01010101  00000000               601785
+# data_mem.core0, 1 = 01010101  01010101               602905
+# what's feeding the case 0101011111101101
+# IN=0x57ed,  DUT=0x0101010101111110, REF=0x0101010101111110, MATH=0x0101010101111110
+# Scores so far: vs REF=31, vs MATH=31, tests=31
+# This test case 0111011110001100 
+# 
+# data_mem.core0, 1 = 01010111  01010101               621595
+# data_mem.core0, 1 = 01010111  00000000               621835
+# data_mem.core0, 1 = 01010111  01010111               622955
+# what's feeding the case 0111011110001100
+# IN=0x778c,  DUT=0x0101011101111000, REF=0x0101011101111000, MATH=0x0101011101111000
+# Scores so far: vs REF=32, vs MATH=32, tests=32
+# This test case 0110100111111001 
+# 
+# data_mem.core0, 1 = 01010110  01010111               641645
+# data_mem.core0, 1 = 01010110  00000000               641885
+# data_mem.core0, 1 = 01010110  01010110               643005
+# what's feeding the case 0110100111111001
+# IN=0x69f9,  DUT=0x0101011010011111, REF=0x0101011010011111, MATH=0x0101011010011111
+# Scores so far: vs REF=33, vs MATH=33, tests=33
+# This test case 0010010011000110 
+# 
+# data_mem.core0, 1 = 01010000  01010110               661695
+# data_mem.core0, 1 = 01010000  00000000               661935
+# data_mem.core0, 1 = 01010000  01010000               662905
+# what's feeding the case 0010010011000110
+# IN=0x24c6,  DUT=0x0101000010011000, REF=0x0101000010011000, MATH=0x0101000010011000
+# Scores so far: vs REF=34, vs MATH=34, tests=34
+# This test case 0000010011000101 
+# 
+# data_mem.core0, 1 = 01000100  01010000               681745
+# data_mem.core0, 1 = 01000100  00000000               681985
+# data_mem.core0, 1 = 01000100  01000100               682375
+# what's feeding the case 0000010011000101
+# IN=0x04c5,  DUT=0x0100010011000101, REF=0x0100010011000101, MATH=0x0100010011000101
+# Scores so far: vs REF=35, vs MATH=35, tests=35
+# This test case 0101001010101010 
+# 
+# data_mem.core0, 1 = 01010101  01000100               701795
+# data_mem.core0, 1 = 01010101  00000000               702035
+# data_mem.core0, 1 = 01010101  01010101               703155
+# what's feeding the case 0101001010101010
+# IN=0x52aa,  DUT=0x0101010100101010, REF=0x0101010100101010, MATH=0x0101010100101010
+# Scores so far: vs REF=36, vs MATH=36, tests=36
+# This test case 0111011111100101 
+# 
+# data_mem.core0, 1 = 01010111  01010101               721845
+# data_mem.core0, 1 = 01010111  00000000               722085
+# data_mem.core0, 1 = 01010111  01010111               723205
+# what's feeding the case 0111011111100101
+# IN=0x77e5,  DUT=0x0101011101111110, REF=0x0101011101111110, MATH=0x0101011101111110
+# Scores so far: vs REF=37, vs MATH=37, tests=37
+# This test case 0111001001110111 
+# 
+# data_mem.core0, 1 = 01010111  00000000               742135
+# data_mem.core0, 1 = 01010111  01010111               743255
+# what's feeding the case 0111001001110111
+# IN=0x7277,  DUT=0x0101011100100111, REF=0x0101011100100111, MATH=0x0101011100100111
+# Scores so far: vs REF=38, vs MATH=38, tests=38
+# This test case 0101011000010010 
+# 
+# data_mem.core0, 1 = 01010101  01010111               761945
+# data_mem.core0, 1 = 01010101  00000000               762185
+# data_mem.core0, 1 = 01010101  01010101               763305
+# what's feeding the case 0101011000010010
+# IN=0x5612,  DUT=0x0101010101100001, REF=0x0101010101100001, MATH=0x0101010101100001
+# Scores so far: vs REF=39, vs MATH=39, tests=39
+# This test case 0101101110001111 
+# 
+# data_mem.core0, 1 = 01010101  00000000               782235
+# data_mem.core0, 1 = 01010101  01010101               783355
+# what's feeding the case 0101101110001111
+# IN=0x5b8f,  DUT=0x0101010110111000, REF=0x0101010110111000, MATH=0x0101010110111000
+# Scores so far: vs REF=40, vs MATH=40, tests=40
+# This test case 0110100111110010 
+# 
+# data_mem.core0, 1 = 01010110  01010101               802045
+# data_mem.core0, 1 = 01010110  00000000               802285
+# data_mem.core0, 1 = 01010110  01010110               803405
+# what's feeding the case 0110100111110010
+# IN=0x69f2,  DUT=0x0101011010011111, REF=0x0101011010011111, MATH=0x0101011010011111
+# Scores so far: vs REF=41, vs MATH=41, tests=41
+# This test case 0001011011001110 
+# 
+# data_mem.core0, 1 = 01001101  01010110               822095
+# data_mem.core0, 1 = 01001101  00000000               822335
+# data_mem.core0, 1 = 01001101  01001101               823155
+# what's feeding the case 0001011011001110
+# IN=0x16ce,  DUT=0x0100110110110011, REF=0x0100110110110011, MATH=0x0100110110110011
+# Scores so far: vs REF=42, vs MATH=42, tests=42
+# This test case 0111101011101000 
+# 
+# data_mem.core0, 1 = 01010111  01001101               842145
+# data_mem.core0, 1 = 01010111  00000000               842385
+# data_mem.core0, 1 = 01010111  01010111               843505
+# what's feeding the case 0111101011101000
+# IN=0x7ae8,  DUT=0x0101011110101110, REF=0x0101011110101110, MATH=0x0101011110101110
+# Scores so far: vs REF=43, vs MATH=43, tests=43
+# This test case 0100111011000101 
+# 
+# data_mem.core0, 1 = 01010100  01010111               862195
+# data_mem.core0, 1 = 01010100  00000000               862435
+# data_mem.core0, 1 = 01010100  01010100               863555
+# what's feeding the case 0100111011000101
+# IN=0x4ec5,  DUT=0x0101010011101100, REF=0x0101010011101100, MATH=0x0101010011101100
+# Scores so far: vs REF=44, vs MATH=44, tests=44
+# This test case 0100100101011100 
+# 
+# data_mem.core0, 1 = 01010100  00000000               882485
+# data_mem.core0, 1 = 01010100  01010100               883605
+# what's feeding the case 0100100101011100
+# IN=0x495c,  DUT=0x0101010010010101, REF=0x0101010010010101, MATH=0x0101010010010101
+# Scores so far: vs REF=45, vs MATH=45, tests=45
+# This test case 0010100010111101 
+# 
+# data_mem.core0, 1 = 01010001  01010100               902295
+# data_mem.core0, 1 = 01010001  00000000               902535
+# data_mem.core0, 1 = 01010001  01010001               903505
+# what's feeding the case 0010100010111101
+# IN=0x28bd,  DUT=0x0101000100010111, REF=0x0101000100010111, MATH=0x0101000100010111
+# Scores so far: vs REF=46, vs MATH=46, tests=46
+# This test case 0101100000101101 
+# 
+# data_mem.core0, 1 = 01010101  01010001               922345
+# data_mem.core0, 1 = 01010101  00000000               922585
+# data_mem.core0, 1 = 01010101  01010101               923705
+# what's feeding the case 0101100000101101
+# IN=0x582d,  DUT=0x0101010110000010, REF=0x0101010110000010, MATH=0x0101010110000010
+# Scores so far: vs REF=47, vs MATH=47, tests=47
+# This test case 0010011001100101 
+# 
+# data_mem.core0, 1 = 01010000  01010101               942395
+# data_mem.core0, 1 = 01010000  00000000               942635
+# data_mem.core0, 1 = 01010000  01010000               943605
+# what's feeding the case 0010011001100101
+# IN=0x2665,  DUT=0x0101000011001100, REF=0x0101000011001100, MATH=0x0101000011001100
+# Scores so far: vs REF=48, vs MATH=48, tests=48
+# This test case 0110001001100011 
+# 
+# data_mem.core0, 1 = 01010110  01010000               962445
+# data_mem.core0, 1 = 01010110  00000000               962685
+# data_mem.core0, 1 = 01010110  01010110               963805
+# what's feeding the case 0110001001100011
+# IN=0x6263,  DUT=0x0101011000100110, REF=0x0101011000100110, MATH=0x0101011000100110
+# Scores so far: vs REF=49, vs MATH=49, tests=49
+# This test case 0000011100001010 
+# 
+# data_mem.core0, 1 = 01000111  01010110               982495
+# data_mem.core0, 1 = 01000111  00000000               982735
+# data_mem.core0, 1 = 01000111  01000111               983125
+# what's feeding the case 0000011100001010
+# IN=0x070a,  DUT=0x0100011100001010, REF=0x0100011100001010, MATH=0x0100011100001010
+# Scores so far: vs REF=50, vs MATH=50, tests=50
+# This test case 0010001010000000 
+# 
+# data_mem.core0, 1 = 01010000  01000111              1002545
+# data_mem.core0, 1 = 01010000  00000000              1002785
+# data_mem.core0, 1 = 01010000  01010000              1003755
+# what's feeding the case 0010001010000000
+# IN=0x2280,  DUT=0x0101000001010000, REF=0x0101000001010000, MATH=0x0101000001010000
+# Scores so far: vs REF=51, vs MATH=51, tests=51
+# This test case 0010000100100000 
+# 
+# data_mem.core0, 1 = 01010000  00000000              1022835
+# data_mem.core0, 1 = 01010000  01010000              1023805
+# what's feeding the case 0010000100100000
+# IN=0x2120,  DUT=0x0101000000100100, REF=0x0101000000100100, MATH=0x0101000000100100
+# Scores so far: vs REF=52, vs MATH=52, tests=52
+# This test case 0100010110101010 
+# 
+# data_mem.core0, 1 = 01010100  01010000              1042645
+# data_mem.core0, 1 = 01010100  00000000              1042885
+# data_mem.core0, 1 = 01010100  01010100              1044005
+# what's feeding the case 0100010110101010
+# IN=0x45aa,  DUT=0x0101010001011010, REF=0x0101010001011010, MATH=0x0101010001011010
+# Scores so far: vs REF=53, vs MATH=53, tests=53
+# This test case 0100110010011101 
+# 
+# data_mem.core0, 1 = 01010100  00000000              1062935
+# data_mem.core0, 1 = 01010100  01010100              1064055
+# what's feeding the case 0100110010011101
+# IN=0x4c9d,  DUT=0x0101010011001001, REF=0x0101010011001001, MATH=0x0101010011001001
+# Scores so far: vs REF=54, vs MATH=54, tests=54
+# This test case 0011111010010110 
+# 
+# data_mem.core0, 1 = 01010011  01010100              1082745
+# data_mem.core0, 1 = 01010011  00000000              1082985
+# data_mem.core0, 1 = 01010011  01010011              1083955
+# what's feeding the case 0011111010010110
+# IN=0x3e96,  DUT=0x0101001111010010, REF=0x0101001111010010, MATH=0x0101001111010010
+# Scores so far: vs REF=55, vs MATH=55, tests=55
+# This test case 0011100000010011 
+# 
+# data_mem.core0, 1 = 01010011  00000000              1103035
+# data_mem.core0, 1 = 01010011  01010011              1104005
+# what's feeding the case 0011100000010011
+# IN=0x3813,  DUT=0x0101001100000010, REF=0x0101001100000010, MATH=0x0101001100000010
+# Scores so far: vs REF=56, vs MATH=56, tests=56
+# This test case 0011100000001101 
+# 
+# data_mem.core0, 1 = 01010011  00000000              1123085
+# data_mem.core0, 1 = 01010011  01010011              1124055
+# what's feeding the case 0011100000001101
+# IN=0x380d,  DUT=0x0101001100000001, REF=0x0101001100000001, MATH=0x0101001100000001
+# Scores so far: vs REF=57, vs MATH=57, tests=57
+# This test case 0101011001010011 
+# 
+# data_mem.core0, 1 = 01010101  01010011              1142895
+# data_mem.core0, 1 = 01010101  00000000              1143135
+# data_mem.core0, 1 = 01010101  01010101              1144255
+# what's feeding the case 0101011001010011
+# IN=0x5653,  DUT=0x0101010101100101, REF=0x0101010101100101, MATH=0x0101010101100101
+# Scores so far: vs REF=58, vs MATH=58, tests=58
+# This test case 0101110101101011 
+# 
+# data_mem.core0, 1 = 01010101  00000000              1163185
+# data_mem.core0, 1 = 01010101  01010101              1164305
+# what's feeding the case 0101110101101011
+# IN=0x5d6b,  DUT=0x0101010111010110, REF=0x0101010111010110, MATH=0x0101010111010110
+# Scores so far: vs REF=59, vs MATH=59, tests=59
+# This test case 0010101011010101 
+# 
+# data_mem.core0, 1 = 01010001  01010101              1182995
+# data_mem.core0, 1 = 01010001  00000000              1183235
+# data_mem.core0, 1 = 01010001  01010001              1184205
+# what's feeding the case 0010101011010101
+# IN=0x2ad5,  DUT=0x0101000101011010, REF=0x0101000101011010, MATH=0x0101000101011010
+# Scores so far: vs REF=60, vs MATH=60, tests=60
+# This test case 0100101000000010 
+# 
+# data_mem.core0, 1 = 01010100  01010001              1203045
+# data_mem.core0, 1 = 01010100  00000000              1203285
+# data_mem.core0, 1 = 01010100  01010100              1204405
+# what's feeding the case 0100101000000010
+# IN=0x4a02,  DUT=0x0101010010100000, REF=0x0101010010100000, MATH=0x0101010010100000
+# Scores so far: vs REF=61, vs MATH=61, tests=61
+# This test case 0011111010101110 
+# 
+# data_mem.core0, 1 = 01010011  01010100              1223095
+# data_mem.core0, 1 = 01010011  00000000              1223335
+# data_mem.core0, 1 = 01010011  01010011              1224305
+# what's feeding the case 0011111010101110
+# IN=0x3eae,  DUT=0x0101001111010101, REF=0x0101001111010101, MATH=0x0101001111010101
+# Scores so far: vs REF=62, vs MATH=62, tests=62
+# This test case 0110100100011101 
+# 
+# data_mem.core0, 1 = 01010110  01010011              1243145
+# data_mem.core0, 1 = 01010110  00000000              1243385
+# data_mem.core0, 1 = 01010110  01010110              1244505
+# what's feeding the case 0110100100011101
+# IN=0x691d,  DUT=0x0101011010010001, REF=0x0101011010010001, MATH=0x0101011010010001
+# Scores so far: vs REF=63, vs MATH=63, tests=63
+# This test case 0111001011001111 
+# 
+# data_mem.core0, 1 = 01010111  01010110              1263195
+# data_mem.core0, 1 = 01010111  00000000              1263435
+# data_mem.core0, 1 = 01010111  01010111              1264555
+# what's feeding the case 0111001011001111
+# IN=0x72cf,  DUT=0x0101011100101100, REF=0x0101011100101100, MATH=0x0101011100101100
+# Scores so far: vs REF=64, vs MATH=64, tests=64
+# This test case 0100100100100011 
+# 
+# data_mem.core0, 1 = 01010100  01010111              1283245
+# data_mem.core0, 1 = 01010100  00000000              1283485
+# data_mem.core0, 1 = 01010100  01010100              1284605
+# what's feeding the case 0100100100100011
+# IN=0x4923,  DUT=0x0101010010010010, REF=0x0101010010010010, MATH=0x0101010010010010
+# Scores so far: vs REF=65, vs MATH=65, tests=65
+# This test case 0110010100001010 
+# 
+# data_mem.core0, 1 = 01010110  01010100              1303295
+# data_mem.core0, 1 = 01010110  00000000              1303535
+# data_mem.core0, 1 = 01010110  01010110              1304655
+# what's feeding the case 0110010100001010
+# IN=0x650a,  DUT=0x0101011001010000, REF=0x0101011001010000, MATH=0x0101011001010000
+# Scores so far: vs REF=66, vs MATH=66, tests=66
+# This test case 0000101011001010 
+# 
+# data_mem.core0, 1 = 01001001  01010110              1323345
+# data_mem.core0, 1 = 01001001  00000000              1323585
+# data_mem.core0, 1 = 01001001  01001001              1324255
+# what's feeding the case 0000101011001010
+# IN=0x0aca,  DUT=0x0100100101100101, REF=0x0100100101100101, MATH=0x0100100101100101
+# Scores so far: vs REF=67, vs MATH=67, tests=67
+# This test case 0100110000111100 
+# 
+# data_mem.core0, 1 = 01010100  01001001              1343395
+# data_mem.core0, 1 = 01010100  00000000              1343635
+# data_mem.core0, 1 = 01010100  01010100              1344755
+# what's feeding the case 0100110000111100
+# IN=0x4c3c,  DUT=0x0101010011000011, REF=0x0101010011000011, MATH=0x0101010011000011
+# Scores so far: vs REF=68, vs MATH=68, tests=68
+# This test case 0011110111110010 
+# 
+# data_mem.core0, 1 = 01010011  01010100              1363445
+# data_mem.core0, 1 = 01010011  00000000              1363685
+# data_mem.core0, 1 = 01010011  01010011              1364655
+# what's feeding the case 0011110111110010
+# IN=0x3df2,  DUT=0x0101001110111110, REF=0x0101001110111110, MATH=0x0101001110111110
+# Scores so far: vs REF=69, vs MATH=69, tests=69
+# This test case 0110000110001010 
+# 
+# data_mem.core0, 1 = 01010110  01010011              1383495
+# data_mem.core0, 1 = 01010110  00000000              1383735
+# data_mem.core0, 1 = 01010110  01010110              1384855
+# what's feeding the case 0110000110001010
+# IN=0x618a,  DUT=0x0101011000011000, REF=0x0101011000011000, MATH=0x0101011000011000
+# Scores so far: vs REF=70, vs MATH=70, tests=70
+# This test case 0011001101000001 
+# 
+# data_mem.core0, 1 = 01010010  01010110              1403545
+# data_mem.core0, 1 = 01010010  00000000              1403785
+# data_mem.core0, 1 = 01010010  01010010              1404755
+# what's feeding the case 0011001101000001
+# IN=0x3341,  DUT=0x0101001001101000, REF=0x0101001001101000, MATH=0x0101001001101000
+# Scores so far: vs REF=71, vs MATH=71, tests=71
+# This test case 0011010011011000 
+# 
+# data_mem.core0, 1 = 01010010  00000000              1423835
+# data_mem.core0, 1 = 01010010  01010010              1424805
+# what's feeding the case 0011010011011000
+# IN=0x34d8,  DUT=0x0101001010011011, REF=0x0101001010011011, MATH=0x0101001010011011
+# Scores so far: vs REF=72, vs MATH=72, tests=72
+# This test case 0111001101111000 
+# 
+# data_mem.core0, 1 = 01010111  01010010              1443645
+# data_mem.core0, 1 = 01010111  00000000              1443885
+# data_mem.core0, 1 = 01010111  01010111              1445005
+# what's feeding the case 0111001101111000
+# IN=0x7378,  DUT=0x0101011100110111, REF=0x0101011100110111, MATH=0x0101011100110111
+# Scores so far: vs REF=73, vs MATH=73, tests=73
+# This test case 0001001010001001 
+# 
+# data_mem.core0, 1 = 01001100  01010111              1463695
+# data_mem.core0, 1 = 01001100  00000000              1463935
+# data_mem.core0, 1 = 01001100  01001100              1464755
+# what's feeding the case 0001001010001001
+# IN=0x1289,  DUT=0x0100110010100010, REF=0x0100110010100010, MATH=0x0100110010100010
+# Scores so far: vs REF=74, vs MATH=74, tests=74
+# This test case 0000110111101011 
+# 
+# data_mem.core0, 1 = 01001010  01001100              1483745
+# data_mem.core0, 1 = 01001010  00000000              1483985
+# data_mem.core0, 1 = 01001010  01001010              1484655
+# what's feeding the case 0000110111101011
+# IN=0x0deb,  DUT=0x0100101011110101, REF=0x0100101011110101, MATH=0x0100101011110101
+# Scores so far: vs REF=75, vs MATH=75, tests=75
+# This test case 0110010110110110 
+# 
+# data_mem.core0, 1 = 01010110  01001010              1503795
+# data_mem.core0, 1 = 01010110  00000000              1504035
+# data_mem.core0, 1 = 01010110  01010110              1505155
+# what's feeding the case 0110010110110110
+# IN=0x65b6,  DUT=0x0101011001011011, REF=0x0101011001011011, MATH=0x0101011001011011
+# Scores so far: vs REF=76, vs MATH=76, tests=76
+# This test case 0111100111000110 
+# 
+# data_mem.core0, 1 = 01010111  01010110              1523845
+# data_mem.core0, 1 = 01010111  00000000              1524085
+# data_mem.core0, 1 = 01010111  01010111              1525205
+# what's feeding the case 0111100111000110
+# IN=0x79c6,  DUT=0x0101011110011100, REF=0x0101011110011100, MATH=0x0101011110011100
+# Scores so far: vs REF=77, vs MATH=77, tests=77
+# This test case 0001001110101110 
+# 
+# data_mem.core0, 1 = 01001100  01010111              1543895
+# data_mem.core0, 1 = 01001100  00000000              1544135
+# data_mem.core0, 1 = 01001100  01001100              1544955
+# what's feeding the case 0001001110101110
+# IN=0x13ae,  DUT=0x0100110011101011, REF=0x0100110011101011, MATH=0x0100110011101011
+# Scores so far: vs REF=78, vs MATH=78, tests=78
+# This test case 0000001010111100 
+# 
+# data_mem.core0, 1 = 01000001  01001100              1563945
+# data_mem.core0, 1 = 01000001  00000000              1564185
+# data_mem.core0, 1 = 01000001  01000001              1564885
+# what's feeding the case 0000001010111100
+# IN=0x02bc,  DUT=0x0100000101111000, REF=0x0100000101111000, MATH=0x0100000101111000
+# Scores so far: vs REF=79, vs MATH=79, tests=79
+# This test case 0101110100101010 
+# 
+# data_mem.core0, 1 = 01010101  01000001              1583995
+# data_mem.core0, 1 = 01010101  00000000              1584235
+# data_mem.core0, 1 = 01010101  01010101              1585355
+# what's feeding the case 0101110100101010
+# IN=0x5d2a,  DUT=0x0101010111010010, REF=0x0101010111010010, MATH=0x0101010111010010
+# Scores so far: vs REF=80, vs MATH=80, tests=80
+# This test case 0001101000001011 
+# 
+# data_mem.core0, 1 = 01001110  01010101              1604045
+# data_mem.core0, 1 = 01001110  00000000              1604285
+# data_mem.core0, 1 = 01001110  01001110              1605105
+# what's feeding the case 0001101000001011
+# IN=0x1a0b,  DUT=0x0100111010000010, REF=0x0100111010000010, MATH=0x0100111010000010
+# Scores so far: vs REF=81, vs MATH=81, tests=81
+# This test case 0011111001110001 
+# 
+# data_mem.core0, 1 = 01010011  01001110              1624095
+# data_mem.core0, 1 = 01010011  00000000              1624335
+# data_mem.core0, 1 = 01010011  01010011              1625305
+# what's feeding the case 0011111001110001
+# IN=0x3e71,  DUT=0x0101001111001110, REF=0x0101001111001110, MATH=0x0101001111001110
+# Scores so far: vs REF=82, vs MATH=82, tests=82
+# This test case 0100000110000101 
+# 
+# data_mem.core0, 1 = 01010100  01010011              1644145
+# data_mem.core0, 1 = 01010100  00000000              1644385
+# data_mem.core0, 1 = 01010100  01010100              1645505
+# what's feeding the case 0100000110000101
+# IN=0x4185,  DUT=0x0101010000011000, REF=0x0101010000011000, MATH=0x0101010000011000
+# Scores so far: vs REF=83, vs MATH=83, tests=83
+# This test case 0101010101001111 
+# 
+# data_mem.core0, 1 = 01010101  01010100              1664195
+# data_mem.core0, 1 = 01010101  00000000              1664435
+# data_mem.core0, 1 = 01010101  01010101              1665555
+# what's feeding the case 0101010101001111
+# IN=0x554f,  DUT=0x0101010101010100, REF=0x0101010101010100, MATH=0x0101010101010100
+# Scores so far: vs REF=84, vs MATH=84, tests=84
+# This test case 0110000000111011 
+# 
+# data_mem.core0, 1 = 01010110  01010101              1684245
+# data_mem.core0, 1 = 01010110  00000000              1684485
+# data_mem.core0, 1 = 01010110  01010110              1685605
+# what's feeding the case 0110000000111011
+# IN=0x603b,  DUT=0x0101011000000011, REF=0x0101011000000011, MATH=0x0101011000000011
+# Scores so far: vs REF=85, vs MATH=85, tests=85
+# This test case 0011001100111010 
+# 
+# data_mem.core0, 1 = 01010010  01010110              1704295
+# data_mem.core0, 1 = 01010010  00000000              1704535
+# data_mem.core0, 1 = 01010010  01010010              1705505
+# what's feeding the case 0011001100111010
+# IN=0x333a,  DUT=0x0101001001100111, REF=0x0101001001100111, MATH=0x0101001001100111
+# Scores so far: vs REF=86, vs MATH=86, tests=86
+# This test case 0011001001111110 
+# 
+# data_mem.core0, 1 = 01010010  00000000              1724585
+# data_mem.core0, 1 = 01010010  01010010              1725555
+# what's feeding the case 0011001001111110
+# IN=0x327e,  DUT=0x0101001001001111, REF=0x0101001001001111, MATH=0x0101001001001111
+# Scores so far: vs REF=87, vs MATH=87, tests=87
+# This test case 0100101100010101 
+# 
+# data_mem.core0, 1 = 01010100  01010010              1744395
+# data_mem.core0, 1 = 01010100  00000000              1744635
+# data_mem.core0, 1 = 01010100  01010100              1745755
+# what's feeding the case 0100101100010101
+# IN=0x4b15,  DUT=0x0101010010110001, REF=0x0101010010110001, MATH=0x0101010010110001
+# Scores so far: vs REF=88, vs MATH=88, tests=88
+# This test case 0001101111110001 
+# 
+# data_mem.core0, 1 = 01001110  01010100              1764445
+# data_mem.core0, 1 = 01001110  00000000              1764685
+# data_mem.core0, 1 = 01001110  01001110              1765505
+# what's feeding the case 0001101111110001
+# IN=0x1bf1,  DUT=0x0100111011111100, REF=0x0100111011111100, MATH=0x0100111011111100
+# Scores so far: vs REF=89, vs MATH=89, tests=89
+# This test case 0100101111011001 
+# 
+# data_mem.core0, 1 = 01010100  01001110              1784495
+# data_mem.core0, 1 = 01010100  00000000              1784735
+# data_mem.core0, 1 = 01010100  01010100              1785855
+# what's feeding the case 0100101111011001
+# IN=0x4bd9,  DUT=0x0101010010111101, REF=0x0101010010111101, MATH=0x0101010010111101
+# Scores so far: vs REF=90, vs MATH=90, tests=90
+# This test case 0000011101100010 
+# 
+# data_mem.core0, 1 = 01000111  01010100              1804545
+# data_mem.core0, 1 = 01000111  00000000              1804785
+# data_mem.core0, 1 = 01000111  01000111              1805175
+# what's feeding the case 0000011101100010
+# IN=0x0762,  DUT=0x0100011101100010, REF=0x0100011101100010, MATH=0x0100011101100010
+# Scores so far: vs REF=91, vs MATH=91, tests=91
+# This test case 0111101101001100 
+# 
+# data_mem.core0, 1 = 01010111  01000111              1824595
+# data_mem.core0, 1 = 01010111  00000000              1824835
+# data_mem.core0, 1 = 01010111  01010111              1825955
+# what's feeding the case 0111101101001100
+# IN=0x7b4c,  DUT=0x0101011110110100, REF=0x0101011110110100, MATH=0x0101011110110100
+# Scores so far: vs REF=92, vs MATH=92, tests=92
+# This test case 0101010110011111 
+# 
+# data_mem.core0, 1 = 01010101  01010111              1844645
+# data_mem.core0, 1 = 01010101  00000000              1844885
+# data_mem.core0, 1 = 01010101  01010101              1846005
+# what's feeding the case 0101010110011111
+# IN=0x559f,  DUT=0x0101010101011001, REF=0x0101010101011001, MATH=0x0101010101011001
+# Scores so far: vs REF=93, vs MATH=93, tests=93
+# This test case 0010000110001111 
+# 
+# data_mem.core0, 1 = 01010000  01010101              1864695
+# data_mem.core0, 1 = 01010000  00000000              1864935
+# data_mem.core0, 1 = 01010000  01010000              1865905
+# what's feeding the case 0010000110001111
+# IN=0x218f,  DUT=0x0101000000110001, REF=0x0101000000110001, MATH=0x0101000000110001
+# Scores so far: vs REF=94, vs MATH=94, tests=94
+# This test case 0010100111111000 
+# 
+# data_mem.core0, 1 = 01010001  01010000              1884745
+# data_mem.core0, 1 = 01010001  00000000              1884985
+# data_mem.core0, 1 = 01010001  01010001              1885955
+# what's feeding the case 0010100111111000
+# IN=0x29f8,  DUT=0x0101000100111111, REF=0x0101000100111111, MATH=0x0101000100111111
+# Scores so far: vs REF=95, vs MATH=95, tests=95
+# This test case 0110000010110111 
+# 
+# data_mem.core0, 1 = 01010110  01010001              1904795
+# data_mem.core0, 1 = 01010110  00000000              1905035
+# data_mem.core0, 1 = 01010110  01010110              1906155
+# what's feeding the case 0110000010110111
+# IN=0x60b7,  DUT=0x0101011000001011, REF=0x0101011000001011, MATH=0x0101011000001011
+# Scores so far: vs REF=96, vs MATH=96, tests=96
+# This test case 0101011010011111 
+# 
+# data_mem.core0, 1 = 01010101  01010110              1924845
+# data_mem.core0, 1 = 01010101  00000000              1925085
+# data_mem.core0, 1 = 01010101  01010101              1926205
+# what's feeding the case 0101011010011111
+# IN=0x569f,  DUT=0x0101010101101001, REF=0x0101010101101001, MATH=0x0101010101101001
+# Scores so far: vs REF=97, vs MATH=97, tests=97
+# This test case 0001010001011100 
+# 
+# data_mem.core0, 1 = 01001101  01010101              1944895
+# data_mem.core0, 1 = 01001101  00000000              1945135
+# data_mem.core0, 1 = 01001101  01001101              1945955
+# what's feeding the case 0001010001011100
+# IN=0x145c,  DUT=0x0100110100010111, REF=0x0100110100010111, MATH=0x0100110100010111
+# Scores so far: vs REF=98, vs MATH=98, tests=98
+# This test case 0100000001011011 
+# 
+# data_mem.core0, 1 = 01010100  01001101              1964945
+# data_mem.core0, 1 = 01010100  00000000              1965185
+# data_mem.core0, 1 = 01010100  01010100              1966305
+# what's feeding the case 0100000001011011
+# IN=0x405b,  DUT=0x0101010000000101, REF=0x0101010000000101, MATH=0x0101010000000101
+# Scores so far: vs REF=99, vs MATH=99, tests=99
+# This test case 0011011110001001 
+# 
+# data_mem.core0, 1 = 01010010  01010100              1984995
+# data_mem.core0, 1 = 01010010  00000000              1985235
+# data_mem.core0, 1 = 01010010  01010010              1986205
+# what's feeding the case 0011011110001001
+# IN=0x3789,  DUT=0x0101001011110001, REF=0x0101001011110001, MATH=0x0101001011110001
+# Scores so far: vs REF=100, vs MATH=100, tests=100
+# This test case 0011001001001001 
+# 
+# data_mem.core0, 1 = 01010010  00000000              2005285
+# data_mem.core0, 1 = 01010010  01010010              2006255
+# what's feeding the case 0011001001001001
+# IN=0x3249,  DUT=0x0101001001001001, REF=0x0101001001001001, MATH=0x0101001001001001
+# Scores so far: vs REF=101, vs MATH=101, tests=101
+# scores =         101         101 out of         101
+# ** Note: $stop    : new_fix2flt_tb.sv(89)
+#    Time: 2025075 ns  Iteration: 0  Instance: /new_int2flt_tb
+# Break in Module new_int2flt_tb at new_fix2flt_tb.sv line 89
+# Stopped at new_fix2flt_tb.sv line 89
+# exit
+# End time: 16:13:54 on Jun 03,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+End time: 16:13:54 on Jun 03,2025, Elapsed time: 0:00:02
+*** Summary *********************************************
+    qrun: Errors:   0, Warnings:   0
+    vlog: Errors:   0, Warnings:   0
+    vopt: Errors:   0, Warnings:   1
+    vsim: Errors:   0, Warnings:   0
+  Totals: Errors:   0, Warnings:   1

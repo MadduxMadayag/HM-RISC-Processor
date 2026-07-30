@@ -1,0 +1,6 @@
+BEGIN 1:data_mem:fast:work
+    mem_core :  1:new_int2flt_tb:fast:work 1:TopLevel0:fast:work
+END 
+BEGIN 1:DM:fast:work
+    mem_core :  1:new_int2flt_tb:fast:work
+END 
