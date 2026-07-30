@@ -38,10 +38,8 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 
 | Type | Format | Instructions |
 |------|--------|--------------|
-| R | 1 bit type, 3 bits opcode, 2 bit source 
-registers, 3 bit target register | ADD, AND, CMP, LSL, LSR, MOV, ORR, NOT |
-| M | 2 bits type, 1 bit opcode, 1 bit reg, 5 bit 
-memory address | LDR, STR |
+| R | 1 bit type, 3 bits opcode, 2 bit source registers, 3 bit target register | ADD, AND, CMP, LSL, LSR, MOV, ORR, NOT |
+| M | 2 bits type, 1 bit opcode, 1 bit reg, 5 bit memory address | LDR, STR |
 | B | 3 bits type, 1 bit opcode, 5 bits register  | BNE, BLT |
 | I | 3 bits type, 6 bits immediate | LDI |
 
