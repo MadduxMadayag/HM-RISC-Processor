@@ -52,9 +52,11 @@ Adds two floating-point values by aligning their exponents, shifting the smaller
 ## Results / Outputs
 
 - Program 1: **101/101**
-- -
+  - `Program_1/qrun.log`
 - Program 2: **37/37**
+  - `Program_2/qrun.log`
 - Program 3: **12/12**
+  - `Program_3/qrun.log`
 
 
 ## Hardware / Software Files
