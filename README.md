@@ -2,8 +2,6 @@
 
 A custom 9-bit load-store processor designed in SystemVerilog. The HM architecture was developed under a constrained instruction width while remaining capable of executing three floating-point benchmark programs.
 
----
-
 ## Design Philosophy
 
 HM is a register-register (load-store) architecture inspired by MIPS and ARM while constrained to a 9-bit instruction format. The primary design goals were:
@@ -12,8 +10,6 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 - Maximize hardware simplicity within a limited ISA
 - Minimize software complexity whenever possible
 - Support floating-point operations through software routines
-
----
 
 ## Architecture Overview
 
@@ -32,7 +28,6 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 
 ![Alt Text](HM_Architecture.png)
 
----
 
 ## Instruction Set
 
@@ -42,8 +37,6 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 | M | 2 bits type, 1 bit opcode, 1 bit reg, 5 bit memory address | LDR, STR |
 | B | 3 bits type, 1 bit opcode, 5 bits register  | BNE, BLT |
 | I | 3 bits type, 6 bits immediate | LDI |
-
----
 
 ## Software Implementation
 
@@ -56,7 +49,6 @@ Converts the custom floating-point format back into a signed 16-bit fixed-point 
 ### Program 3 – Floating-Point Addition
 Adds two floating-point values by aligning their exponents, shifting the smaller mantissa, performing the addition, normalizing the result, and storing the final floating-point value back to memory.
 
----
 
 ## Simulation
 
@@ -67,7 +59,6 @@ Instructions for selecting
 - Program-specific LUT
 - Done address
 
----
 
 ## Results
 
@@ -75,7 +66,6 @@ Instructions for selecting
 - Program 2:
 - Program 3:
 
----
 
 ## Repository Structure
 
@@ -90,8 +80,7 @@ DataMem.sv
 Lut.sv
 ...
 ```
----
 
 ## Authors
 
-Maddux Madayag & Yu-Han Lou
+**Maddux Madayag & Yu-Han Lou**
