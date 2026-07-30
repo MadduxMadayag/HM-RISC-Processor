@@ -62,9 +62,9 @@ Instructions for selecting
 
 ## Results
 
-- Program 1:
-- Program 2:
-- Program 3:
+- Program 1: **101/101**
+- Program 2: **37/37**
+- Program 3: **12/12**
 
 
 ## Repository Structure
