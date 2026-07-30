@@ -49,23 +49,11 @@ Converts the custom floating-point format back into a signed 16-bit fixed-point 
 ### Program 3 – Floating-Point Addition
 Adds two floating-point values by aligning their exponents, shifting the smaller mantissa, performing the addition, normalizing the result, and storing the final floating-point value back to memory.
 
-
-## Simulation
-
-
-
 ## Results
 
 - Program 1: **101/101**
 - Program 2: **37/37**
 - Program 3: **12/12**
-
-
-## Repository Structure
-
-```text
-text
-```
 
 ## Authors
 
