@@ -43,7 +43,7 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 ### Program 1 – Fixed-Point to Floating-Point Conversion
 Converts a signed 16-bit fixed-point integer into the custom floating-point format by extracting the sign, normalizing the mantissa, computing the exponent, and assembling the final floating-point representation.
 
-### – Floating-Point to Fixed-Point Conversion
+### Program 2 – Floating-Point to Fixed-Point Conversion
 Converts the custom floating-point format back into a signed 16-bit fixed-point integer by recovering the sign, exponent, and mantissa, handling overflow cases, and reconstructing the original value through software-based shifting operations.
 
 ### Program 3 – Floating-Point Addition
