@@ -51,10 +51,8 @@ Adds two floating-point values by aligning their exponents, shifting the smaller
 
 ## Results / Outputs
 
--
--
--
 - Program 1: **101/101**
+- -
 - Program 2: **37/37**
 - Program 3: **12/12**
 
