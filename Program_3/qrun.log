@@ -1,0 +1,211 @@
+QuestaSim-64 qrun 2024.3_1 Utility 2024.10 Oct 17 2024
+Start time: 03:08:39 on Jun 02,2025
+qrun -batch -access=rw+/. -timescale 1ns/1ns -mfcu design.sv testbench.sv -voptargs="+acc=npr" -do " run -all; exit" 
+Creating library 'qrun.out/work'.
+QuestaSim-64 vlog 2024.3_1 Compiler 2024.10 Oct 17 2024
+Start time: 03:08:39 on Jun 02,2025
+vlog -timescale 1ns/1ns -mfcu design.sv testbench.sv -work qrun.out/work -statslog qrun.out/stats_log -writesessionid "+qrun.out/top_dus" -csession=incr 
+-- Compiling module Top_level
+-- Compiling module Top_level0
+-- Compiling module Alu
+-- Compiling module ControlUnit
+-- Compiling module DM
+-- Compiling module data_mem
+-- Compiling module InstructionROM
+-- Compiling module Lut
+-- Compiling module ProgramCounter
+-- Compiling module RegFile
+-- Compiling module Rr1Mux
+-- Compiling module WriteDMux
+-- Compiling module WriteRMux
+-- Compiling module fltflt_no_rnd_tb
+
+Top level modules:
+	fltflt_no_rnd_tb
+End time: 03:08:39 on Jun 02,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+QuestaSim-64 vopt 2024.3_1 Compiler 2024.10 Oct 17 2024
+** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility. The +acc switch would be deprecated in a future release.
+Start time: 03:08:39 on Jun 02,2025
+vopt -access=rw+/. -timescale 1ns/1ns -mfcu "+acc=npr" -findtoplevels qrun.out/work+1+ -work qrun.out/work -statslog qrun.out/stats_log -csession=incr -o qrun_opt -csessionid=2 
+
+Top level modules:
+	fltflt_no_rnd_tb
+
+Analyzing design...
+-- Loading module fltflt_no_rnd_tb
+-- Loading module Top_level0
+-- Loading module data_mem
+-- Loading module Top_level
+-- Loading module ProgramCounter
+-- Loading module InstructionROM
+-- Loading module ControlUnit
+-- Loading module Lut
+-- Loading module RegFile
+-- Loading module Alu
+-- Loading module Rr1Mux
+-- Loading module WriteRMux
+-- Loading module WriteDMux
+-- Loading module DM
+Optimizing 14 design-units (inlining 0/14 module instances):
+-- Optimizing module fltflt_no_rnd_tb(fast)
+-- Optimizing module ControlUnit(fast)
+-- Optimizing module Top_level0(fast)
+-- Optimizing module Alu(fast)
+-- Optimizing module Top_level(fast)
+-- Optimizing module RegFile(fast)
+-- Optimizing module data_mem(fast)
+-- Optimizing module WriteRMux(fast)
+-- Optimizing module DM(fast)
+-- Optimizing module WriteDMux(fast)
+-- Optimizing module ProgramCounter(fast)
+-- Optimizing module Rr1Mux(fast)
+-- Optimizing module Lut(fast)
+-- Optimizing module InstructionROM(fast)
+Optimized design name is qrun_opt
+End time: 03:08:40 on Jun 02,2025, Elapsed time: 0:00:01
+Errors: 0, Warnings: 1
+# vsim -batch -lib qrun.out/work -do " run -all; exit" -statslog qrun.out/stats_log qrun_opt -appendlog -l qrun.log 
+# Start time: 03:08:40 on Jun 02,2025
+# //  Questa Sim-64
+# //  Version 2024.3_1 linux_x86_64 Oct 17 2024
+# //
+# // Unpublished work. Copyright 2024 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# Loading sv_std.std
+# Loading work.fltflt_no_rnd_tb(fast)
+# Loading work.Top_level0(fast)
+# Loading work.data_mem(fast)
+# Loading work.Top_level(fast)
+# Loading work.ProgramCounter(fast)
+# Loading work.InstructionROM(fast)
+# Loading work.ControlUnit(fast)
+# Loading work.Lut(fast)
+# Loading work.RegFile(fast)
+# Loading work.Alu(fast)
+# Loading work.Rr1Mux(fast)
+# Loading work.WriteRMux(fast)
+# Loading work.WriteDMux(fast)
+# Loading work.DM(fast)
+# 
+# run -all
+# diff =  0
+# flt1b = 0  00110  1000000100
+# flt2b = 0  00110  1000000100
+# flt3b =  0  00111  1000000100
+# flt3_testb =  00111   1000000100
+# scores =           1,           1 out of           1
+# clock cycle ct =         104
+#  
+# diff =  0
+# flt1b = 0  10000  1000000100
+# flt2b = 0  10000  1000000100
+# flt3b =  0  10001  1000000100
+# flt3_testb =  10001   1000000100
+# scores =           2,           2 out of           2
+# clock cycle ct =         103
+#  
+# diff =  2
+# flt1b = 0  10010  1000010000
+# flt2b = 0  10000  1000000100
+# flt3b =  0  10010  1110010001
+# flt3_testb =  10010   1110010001
+# scores =           3,           3 out of           3
+# clock cycle ct =         115
+#  
+# diff = 20
+# flt1b = 0  10100  1000001111
+# flt2b = 0  00000  0001000000
+# flt3b =  0  10100  1000001111
+# flt3_testb =  10100   1000001111
+# scores =           4,           4 out of           4
+# clock cycle ct =         295
+#  
+# diff = 63
+# flt1b = 0  00110  1000000100
+# flt2b = 0  00111  1000000100
+# flt3b =  0  01000  0010000011
+# flt3_testb =  01000   0010000011
+# scores =           5,           5 out of           5
+# clock cycle ct =         119
+#  
+# diff = 59
+# flt1b = 0  10000  1000000000
+# flt2b = 0  10101  1000000100
+# flt3b =  0  10101  1000110100
+# flt3_testb =  10101   1000110100
+# scores =           6,           6 out of           6
+# clock cycle ct =         145
+#  
+# diff = 59
+# flt1b = 0  10010  1000000000
+# flt2b = 0  10111  1000000100
+# flt3b =  0  10111  1000110100
+# flt3_testb =  10111   1000110100
+# scores =           7,           7 out of           7
+# clock cycle ct =         145
+#  
+# diff = 20
+# flt1b = 0  10100  1000000000
+# flt2b = 0  00000  1000000100
+# flt3b =  0  10100  1000000000
+# flt3_testb =  10100   1000000000
+# scores =           8,           8 out of           8
+# clock cycle ct =         295
+#  
+# diff =  0
+# flt1b = 0  00110  1000000100
+# flt2b = 0  00110  1000000100
+# flt3b =  0  00111  1000000100
+# flt3_testb =  00111   1000000100
+# scores =           9,           9 out of           9
+# clock cycle ct =         103
+#  
+# diff =  0
+# flt1b = 0  10110  1000000100
+# flt2b = 0  10110  1000000100
+# flt3b =  0  10111  1000000100
+# flt3_testb =  10111   1000000100
+# scores =          10,          10 out of          10
+# clock cycle ct =         103
+#  
+# diff =  2
+# flt1b = 0  10010  1000010000
+# flt2b = 0  10000  1000000100
+# flt3b =  0  10010  1110010001
+# flt3_testb =  10010   1110010001
+# scores =          11,          11 out of          11
+# clock cycle ct =         115
+#  
+# diff =  6
+# flt1b = 0  11010  1000001111
+# flt2b = 0  10100  1000000000
+# flt3b =  0  11010  1000100111
+# flt3_testb =  11010   1000100111
+# scores =          12,          12 out of          12
+# clock cycle ct =         155
+#  
+# score1 =          12, score2 =          12, out of          12
+# ** Note: $stop    : fltflt_no_rnd_tb.sv(107)
+#    Time: 18345 ns  Iteration: 0  Instance: /fltflt_no_rnd_tb
+# Break in Module fltflt_no_rnd_tb at fltflt_no_rnd_tb.sv line 107
+# Stopped at fltflt_no_rnd_tb.sv line 107
+# exit
+# End time: 03:08:41 on Jun 02,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+End time: 03:08:41 on Jun 02,2025, Elapsed time: 0:00:02
+*** Summary *********************************************
+    qrun: Errors:   0, Warnings:   0
+    vlog: Errors:   0, Warnings:   0
+    vopt: Errors:   0, Warnings:   1
+    vsim: Errors:   0, Warnings:   0
+  Totals: Errors:   0, Warnings:   1

@@ -1,0 +1,6 @@
+BEGIN 1:data_mem:fast:work
+    mem_core :  1:Top_level0:fast:work 1:fltflt_no_rnd_tb:fast:work
+END 
+BEGIN 1:DM:fast:work
+    mem_core :  1:fltflt_no_rnd_tb:fast:work
+END 
