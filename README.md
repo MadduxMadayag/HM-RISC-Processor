@@ -105,5 +105,4 @@ Lut.sv
 
 ## Authors
 
-Maddux Madayag
-Yu-Han Lou
+Maddux Madayag & Yu-Han Lou
