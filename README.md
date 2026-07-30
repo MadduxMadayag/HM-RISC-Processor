@@ -47,25 +47,14 @@ HM is a register-register (load-store) architecture inspired by MIPS and ARM whi
 
 ## Software Implementation
 
-Because the processor operates on only 8-bit values, all 16-bit arithmetic is implemented in software.
+### Program 1 – Fixed-Point to Floating-Point Conversion
+Converts a signed 16-bit fixed-point integer into the custom floating-point format by extracting the sign, normalizing the mantissa, computing the exponent, and assembling the final floating-point representation.
 
-### Program 1
-- Normalize integer
-- Compute exponent
-- Assemble floating-point representation
+### – Floating-Point to Fixed-Point Conversion
+Converts the custom floating-point format back into a signed 16-bit fixed-point integer by recovering the sign, exponent, and mantissa, handling overflow cases, and reconstructing the original value through software-based shifting operations.
 
-### Program 2
-- Extract sign
-- Recover mantissa
-- Handle overflow
-- Convert back to fixed point
-
-### Program 3
-- Compare exponents
-- Align mantissas
-- Add
-- Normalize
-- Store result
+### Program 3 – Floating-Point Addition
+Adds two floating-point values by aligning their exponents, shifting the smaller mantissa, performing the addition, normalizing the result, and storing the final floating-point value back to memory.
 
 ---
 
