@@ -1,0 +1,265 @@
+//float_add -- Write a program that adds two 16-bit floating point numbers.
+//    float X;
+//    float Y;
+//    float Z = X+Y;
+//One 16-bit floating point operand will occupy data memory locations 9 (MSW) and 
+//8 (LSW), whereas the other will occupy locations 11 and 10. Write the 16-bit floating 
+//point sum into locations 13 and 12 (LSW).
+
+
+//do computation on mantissa of the larger exponent 
+
+//FP 1:
+//memory[8] = float[7:0] LSW
+//memory[9] = float[15:8] MSW
+
+//FP 2:
+//memory[10] = float[7:0] LSW
+//memory[11] = float[15:8] MSW
+
+//Goal:
+//mem[13] = MSW 
+//mem[12] = LSW 
+
+
+//get sign bit
+
+// load values into r1
+ldr r1, 11         // FP2 MSW memory[11]
+ldi 32             // 100000
+lsl r0, r0      
+lsl r0, r0         // 10000000
+and r0, r1         // sign bit in R1
+str r1, 15         // mem[15] = X000_0000, sign bit in mem[15]
+
+
+//get exponent
+
+// load values into r0 and r1
+ldr r0, 9         // FP1 MSW memory[9]
+ldr r1, 11        // FP2 MSW memory[11]
+
+//copy to R5 R6
+add r0, r5        // FP1 MSW in R5
+add r1, r6        // FP2 MSW in R6
+
+// saves mantissas
+// FP1              memory[8] = float[7:0] LSW     memory[9] = float[15:8] MSW
+ldr r1, 9
+
+ldi 3             // 00000011
+and r0, r1        // 0000000XX MSW mantissa of FP1
+ldi 4             // 00000100
+orr r0, r1        // add implicit 1 -> 00000_1XX MSW mantissa of FP1 with imp 1
+str r1, 16        // MSW mantissa of FP1 in mem[16]
+
+// FP2              //memory[10] = float[7:0] LSW     memory[11] = float[15:8] MSW
+ldr r1, 11
+
+ldi 3             // 00000011
+and r0, r1        // 0000000XX MSW mantissa of FP2
+ldi 4             // 00000100
+orr r0, r1        // add implicit 1 -> 00000_1XX MSW mantissa of FP2 with imp 1
+str r1, 17        // MSW mantissa of FP2 in mem[17]
+
+
+//get exponent bits
+ldi 31            // 00011111
+lsl r0, r0        // 00111110
+lsl r0, r0        // 01111100
+and r0, r5        // FP1 BiasExp in R5 _ XXXXX _ _
+and r0, r6        // FP2 BiasExp in R6 _ XXXXX _ _
+
+
+//compare to see which FP has larger exponent
+// Shift exponents down
+mov r0, r5
+lsr r0, r0          
+lsr r0, r5        // FP1 Exp _ _ _ XXXXX
+mov r0, r6
+lsr r0, r0          
+lsr r0, r6        // FP2 Exp _ _ _ XXXXX
+mov r0, r5
+str r0, 18        // FP1 BiasExp in mem[18]
+mov r0, r6 
+str r0, 19        // FP2 BiasExp in mem[19]
+str r0, 22        // store final exp for no shift
+mov r1, r5
+ldi 1
+bne r1, r6        // branch to need shift
+
+//NoShift
+ldi 0             // clear R4 - R7
+and r0, r2
+and r0, r3
+and r0, r4
+and r0, r5
+
+ldr r0, 16        // load HW mantissa w/ imp1 of FP1 in R0
+add r0, r3        // put FP1 MSW in R3
+ldr r0, 8         // load LW mantissa of FP1 in R0
+add r0, r2        // put FP1 LSW in R2
+
+ldr r0, 17        // load HW mantissa w/ imp1 of FP2 in R0
+add r0, r5        // put FP1 MSW in R5
+ldr r0, 10        // load LW mantissa of FP2 in R0
+add r0, r4        // put FP1 LSW in R4
+
+add r2, r4        // Sum of LSW in R4
+add r3, r5        // Sum of MSW in R5
+mov r1, r4        // move sum LSW to R1
+str r1, 12        // store final LSW in mem[12] OUTPUT
+mov r1, r5
+str r1, 13        // store MSW sum in mem[13] OUTPUT but will be modified
+
+ldi 0
+and r0, r3
+ldi 5
+bne r0, r3        // branch to Check1XXX
+
+NeedShift#1:
+ldi 3
+blt r1, r6        // branch to FP1<FP2         
+
+// FP2<FP1        // shift FP2 mantissa left
+ldr r1, 18
+str r1, 22        // Final exp in mem[22]
+mov r2, r6        // FP2 - FP1 Bias
+cmp r2, r5        // R5 counter (negative)
+
+//load mantissa of FP2
+ldr r1, 10        // FP2 LSW mantissa 
+ldr r0, 17        // FP2 MSW mantissa with implicit 1
+mov r2, r0        // FP2 MSW mantissa with implicit 1 in R2
+
+FP2ShiftRight#2:
+ldi 1
+add r0, r5        // Increment count
+ldi 0
+lsr r0, r0        // clear carry
+lsr r2, r2        // shift MSW
+lsr r1, r1        // shift LSW
+ldi 0
+and r0, r3
+ldi 2             // branch to FP2ShiftLeft
+bne r3, r5        // check if counter is 0, if not, continue shifting
+
+str r1, 20        // store shifted FP2 LSW in mem[20]
+mov r0, r2      
+str r0, 21        // store shifted FP2 MSW in 21
+
+ldi 0             // clear R6 and R7
+and r0, r6
+and r0, r7
+ldr r0, 16        // load MSW mantissa w/ imp1 of FP1 in R0
+add r0, r6        // put FP1 MSW in R6
+ldr r0, 8         // load LSW mantissa of FP1 in R0
+add r0, r7        // put FP1 LSW in R7
+add r1, r7        // Sum of LSW in R7
+add r2, r6        // Sum of MSW in R6
+mov r1, r7        // move sum LSW to R1
+str r1, 12        // store final LW in mem[12] OUTPUT
+mov r1, r6
+str r1, 13        // store HW sum in mem[13] OUTPUT but will be modified
+
+ldi 0
+and r0, r3
+ldi 5       
+bne r0, r3        // guarantee branch to Check1XXX
+
+
+FP1<FP2#3:        // shift fp1 mantissa left
+ldr r1, 19
+str r1, 22        // Final exp in mem[22]
+mov r2, r5        // FP1 - FP2 Bias 
+cmp r2, r6        // R6 counter (negative)
+
+//load mantissa of FP1
+ldr r1, 8         // FP1 LSW mantissa 
+ldr r0, 16        // FP1 MSW mantissa with implicit 1
+mov r2, r0        // FP1 MSW mantissa with implicit 1 in R2
+
+FP1ShiftRight#4:
+ldi 1
+add r0, r6        // Increment count
+ldi 0
+lsr r0, r0        // clear carry
+lsr r2, r2        // shift MSW
+lsr r1, r1        // shift LSW
+ldi 0
+and r0, r3
+ldi 4             // Branch to FP1ShiftLeft
+bne r3, r6        // check if counter is 0, if not, continue shifting
+
+str r1, 20        // store shifted LW in 20
+mov r0, r2        // store shifted HW in 21
+str r0, 21        // store shifted 
+
+ldi 0             // clear R5 and R7
+and r0, r5
+and r0, r7
+ldr r0, 17        // load MSW mantissa w/ imp1 of FP2 in R0
+add r0, r5        // put FP2 MSW in R5
+ldr r0, 10        // load LSW mantissa of FP2 in R0
+add r0, r7        // put FP2 LSW in R7
+add r1, r7        // Sum of LSW in R7
+add r2, r5        // Sum of MSW in R5
+mov r1, r7        // move sum LSW to R1
+str r1, 12        // store final LSW in mem[12] OUTPUT
+mov r1, r5
+str r1, 13        // store MSW sum in mem[13] OUTPUT but will be modified
+ldi 0
+and r0, r3
+ldi 5
+bne r0, r3        // branch to Check1X
+
+
+Check1XXX#5:
+ldr r1, 13        // load MSW sum in R1
+ldi 8
+and r0, r1        // check for 0000_1000
+ldi 0
+and r0, r3        // clear R3
+//add r0, r3
+ldi 7             // Check for overflow1
+bne r1, r3        // don't need to shift once more, branch to SpecialCase
+
+CombineEverything#6:
+ldr r0, 15        // load sign bit
+ldr r1, 22        // load final exp
+lsl r1, r1
+lsl r1, r1        // shift back exp
+orr r0, r1        // R1 contains S EEEEE 0 0 
+// clear top of mantissa
+ldi 0 
+and r0, r3
+ldr r0, 13        // load MSW mantissa 
+add r0, r3        // MSW mantissa in R3
+ldi 3
+and r0, r3        // clear mant, R3 contains 000000_XX
+orr r3, r1        // R1 contains S EEEEE MM
+str r1, 13        // final MSW in mem[13]
+ldi 0
+and r0, r3
+ldi 8
+bne r0, r3        // Branch to done
+
+//special case, shift one time right 
+SpecialCase#7:
+ldr r1, 13        // load MSW sum in R1
+ldr r0, 12        // load MSW sum in R0
+lsr r1, r1        // right shift MSW mantissa
+lsr r0, r0        // right shift LSW mantissa
+str r0, 12        // store back into mem[12]
+str r1, 13        // store back into mem[13]
+ldr r1, 22        // load final exp
+ldi 1
+add r0, r1        // _ _ _ XXXXX + 1
+str r1, 22
+
+ldi 0
+and r0, r3
+ldi 6
+bne r0, r3       // branch to combine
+
+Done#8:

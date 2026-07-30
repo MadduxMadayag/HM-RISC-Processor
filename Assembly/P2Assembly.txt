@@ -1,0 +1,227 @@
+//float2int -- Write a program that converts a 16-bit IEEE format floating point number 
+//to 16-bit two’s complement fixed point 8 integer + 8 fractional, again i.e.:
+//    float X;
+//    short Y = X;
+//The operand, X, is found in memory locations 5 (MSW) and 4 (LSW). 
+//The result shall be written into locations 7 (MSW) and 6 (LSW)
+
+//sign    exponent    fraction/mantissa   bias 
+//1       5           10                  15
+
+//Given:
+//memory[4] = float[7:0] LSW
+//memory[5] = float[15:8] MSW
+
+//Goal:
+//mem[7] = MSW
+//mem[6] = LSW 
+
+// load values into r0 and r1
+ldr r0, 4                               // LSW memory[4]
+ldr r1, 5                               // MSW memory[5]
+
+// copy MSW and LSW to R5 R6
+add r0, r6                              // LSW in R6
+add r1, r5                              // MSW in R5
+
+// zero case
+add r0, r2                              // move R0 to R2
+ldi 1
+bne r2, r3                              // check LSW is 0, if not branch to get sign
+bne r1, r3                              // check if HSW is 0, if not branch to get sign
+ldr r0, 4                               // relocate to correct spots in memory
+str r0, 6                               // store 00000000 in mem[6]
+ldr r1, 5
+str r1, 7                               // store 00000000 in mem[7]
+ldi 11                                  // zero detected, output is 00000000.00000000
+bne r0, r4                              // branch to done
+
+// get sign bit
+GetSign#1:
+ldi 32                                  // R0 holds 00100000
+lsl r0, r0      
+lsl r0, r0                              // R0 now holds 10000000
+and r0, r1                              // extract and store sign bit in R1
+str r1, 9                               // store sign bit, mem[9] = X000_0000
+
+// get unbiased exponent
+GetExp#2:
+ldi 0
+and r0, r7
+ldi 31                                  // R0 holds 00011111
+lsl r0, r0                              // 00111110
+lsl r0, r0                              // R0 holds 01111100
+ldr r1, 5                               // HW in R1
+and r0, r1                              // BiasExp in R1 0 XXXXX 0 0
+lsr r1, r1 
+lsr r1, r1                              // 000 XXXXX in R1
+ldi 17
+cmp r1, r0                              // R0 contains UnbiasedExp: BiasExp - 17
+add r0, r7                              // unbiased exp in r7
+
+// Determineshift direction
+mov r1, r5                              // MSW in R1
+mov r2, r6                              // LSW in R2
+ldi 3
+and r0, r1                              // clear sign and mantissa R1 = 0000_00XX
+ldi 4  
+orr r0, r1                              // add implicit 1, R1 = 0000_01XX
+ldi 0
+and r0, r3                              // clear R3
+ldi 5
+bne r3, r7                              // branches to determine shift if R7 != 0
+
+//done shifting
+DoneShifting#3:
+
+//Check sign bit
+ldi 0
+and r0, r3                              // clear R3
+and r0, r4                              // clear r4
+
+ldi 32
+lsl r0, r0
+lsl r0, r0
+add r0, r3                              // R3 = 1000_0000
+ldr r0, 9                               // load MSW back
+add r0, r4                              // sign bit in R4
+ldi 4
+bne r3, r4                              // branch to InTwos
+
+// Negative 
+not r1, r1                              // not MSW
+not r2, r2                              // not LSW
+ldi 0
+and r0, r3                              // clear R3
+ldi 1
+add r0, r2      
+add r3, r1
+ldi 0
+add r0, r0                              // clear carry
+
+// Has the correct 2s complement mantissa representation
+InTwos#4: 
+// saves values in correct memory locations
+str r1, 7                               // store MSW in mem[7]
+mov r0, r2
+str r0, 6                               // store LSW in mem [6]
+ldi 0
+and r0, r3                              // clear R3
+ldi 11
+bne r0, r3                              // ensure branch to done
+
+DetermineShift#5:
+ldi 5
+add r0, r3                              // Check if unbiased exp is greater than 5
+ldi 8                                   // OVERFLOW shifting left
+blt r3, r7                              // Branch to WhichOverflow
+ldi 0
+and r0, r3
+ldi 10
+not r0, r0
+add r0, r3
+ldi 1
+add r0, r3                              // R3 = -10
+ldi 0
+and r0, r4
+add r3, r4
+mov r3, r7
+ldi 8                                   // Check if unbiased exp is less than -10
+blt r3, r4                              // branch to WhichOverflow 
+ldi 0                                   // unbiased exponent between 5 and -10, otherwise theres overflow
+and r0, r3
+ldi 7
+blt r3, r7                              // branches to shift left if R7 (unbiased exponent) is positive
+                                        // shift right if R7 is negative
+
+ShiftRight#6:
+ldi 1
+add r0, r7                              // Decrement exponent count
+ldi 0
+and r0, r3                              // clear R3
+ldi 0
+lsl r0, r0                              // clear carry
+lsr r1, r1                              // MSW shift right
+lsr r2, r2                              // LSW shift right
+ldi 0
+and r0, r3                              // clear R3
+ldi 6                           
+bne r3, r7                              // Check if exponent count is 0, if not, branch to ShiftRight (continue shifting)
+ldi 3          
+bne r0, r3                              // guarantee branch to DoneShifting
+
+ShiftLeft#7:
+ldi 1
+cmp r0, r7                              // Decrement count (shift amount)
+ldi 0
+and r0, r3                              // clear R3
+ldi 0
+lsl r0, r0                              // clear carry
+lsl r2, r2                              // LSW shift left
+lsl r1, r1                              // MSW shift left
+ldi 0
+and r0, r3                              // clear R3
+ldi 7                                   // Check if exponent count is 0, if not, continue shifting
+bne r3, r7                              // Branch to ShiftLeft
+ldi 3          
+bne r0, r3                              // guarantee branch to doneshifting
+
+
+WhichOverflow#8: 
+ldr r1, 9                               // load sign bit in R1
+ldi 0
+and r0, r3                              // clear R3
+ldi 32
+lsl r0, r0
+lsl r0, r0
+add r0, r3                              // R3 holds 1000_0000
+ldi 10
+bne r1, r3                              // check if sign bit is negative, if not branch 
+                                        // to big overflow positive
+
+//Overflow negative
+ldr r1, 5                               // load MSW in R1
+ldi 0
+and r0, r3                              // clear R3
+ldi 32
+lsl r0, r0
+lsl r0, r0
+add r0, r3                              // R3 holds 1000_0000
+ldi 9                                   // Check if dealing with biggest negative fixpoint 1000_0000.0000_0000
+bne r3, r1                              // 100000000 go to biggest negative
+
+ldi 0
+str r0, 6                               // store 0000_0000 in mem[6]
+str r0, 7                               // store 0000_0000 in mem[7]
+ldi 0                                   // Output of program should be 0000000000000000 (negative overflow detected)
+and r0, r3                              // clear R3
+ldi 11       
+bne r0, r3                              // guarantee branch to done
+
+BiggestNegative#9:                      // fix = 1000_0000.0000_0000 (greatest negative number in fix 16bit)
+ldi 0
+and r0, r1
+and r0, r3
+str r0, 6                               // store 0000_0000 in mem[6]
+ldi 32                                  // 0010_0000
+lsl r0, r0  
+lsl r0, r0
+add r0, r1                              // R1 contains 1000_0000
+str r1, 7                               // store 1000_0000 in mem[7]
+ldi 11                                  // Output of program should be 1000000000000000
+bne r0, r3                              // Branch to done
+
+OverflowPositive#10:
+ldi 0
+and r0, r1                              // clear R1
+ldi 63                                  // R0 holds 00111111     
+add r0, r1                              // R1 contains same value as R0
+add r0, r1                              // R1 holds 01111110
+ldi 1
+add r0, r1                              // R1 = 0111_1111
+str r1, 7                               // Store R1 in mem[7]
+add r1, r1                              // R1 = 1111_1110
+add r0, r1                              // R1 = 1111_1111
+str r1, 6                               // Store R1 in mem[6]
+                                        // Output 011111111.11111111 (positive overflow detected)
+Done#11:

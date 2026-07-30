@@ -1,0 +1,224 @@
+//sign    exponent    fraction/mantissa   bias 
+//1       5           10                  15
+
+//Arbitrary:
+//memory[0] = float[7:0] LSW
+//memory[1] = float[15:8] MSW
+
+//Goal:
+//mem[3] = MSW Y
+//mem[2] = LSW Y
+
+
+// load values into r0 and r1
+ldr r0, 0                // LSW memory[0]
+ldr r1, 1                // MSW memory[1]
+
+//copy to R5 R6
+add r0, r6               // LSW in R6
+add r1, r5               // MSW in R5
+
+// zero case
+add r0, r2 
+ldi 1
+bne r2, r3               // check LSW is 0, if not 0 branch to negativeOne
+ldi 1
+bne r1, r3               // check MSW is 0, if not 0 branch to negativeOne
+
+// Is 0, store to memory
+ldr r0, 0 
+str r0, 2
+ldr r1, 1
+str r1, 3
+ldi 9
+bne r0, r4               // branch to done
+
+// check negative 1
+NegativeOne#1:
+mov r2, r6              // LSW
+mov r1, r5              // MSW
+ldi 0 
+and r0, r3              // clear R3
+ldi 2
+bne r2, r3              // check if LSW is 0, if not branch to positive 1
+ldi 0
+add r0, r0              // clear add carry
+ldi 1
+add r0, r1              // R1 = MSW + 1
+ldi 0
+and r0, r3              // clear R3
+and r0, r4              // clear R4
+add r0, r0              // clear add carry
+ldi 2
+bne r1, r3              // checks if MSW+1 = 0, if not branches to PositiveOne
+
+ldi 47
+lsl r0, r0
+lsl r0, r0
+str r0, 3
+str r1, 2
+ldi 9
+bne r0, r1              // branch to done
+
+// positive 1 case
+PositiveOne#2:
+mov r2, r6
+mov r1, r5
+ldi 0
+and r0, r3
+and r0, r4
+ldi 3
+bne r3, r2              // check if LSW is 0, if not branch to GetSign
+ldi 1
+add r0, r3
+ldi 3
+bne r1, r3             // check if MSW is 1, if not branch to GetSign
+
+ldi 60                 // 00111100
+str r0, 3
+ldi 0
+str r0, 2
+ldi 9
+bne r0, r4            // guarantee branch to done
+
+//get sign bit
+GetSign#3:
+ldi 32                // 100000
+lsl r0, r0      
+lsl r0, r0            // 10000000
+and r0, r5            // sign bit in R5
+mov r0, r5            // mov to R0 to store
+str r0, 3             // mem[3] = X000_0000 (sign bit)
+ldi 0
+and r0, r3
+ldi 32
+lsl r0, r0
+lsl r0, r0
+add r0, r3           // R3 = 1000_0000
+ldr r1, 1            // load HW back
+ldi 4
+bne r3, r5           // checks if sign bit negative, if not branch to Positive
+
+// R1 has MSW and R6 has LSW at this time
+
+// If negative
+not r1, r1
+not r1, r6
+ldi 0
+and r0, r3
+ldi 1
+add r0, r6
+add r3, r1
+ldi 0
+add r0, r0
+
+Positive#4:
+//store in memory
+str r1, 5
+mov r0, r6
+str r0, 6
+mov r2, r6
+//determine if need to shift
+ldi 0
+and r0, r3
+
+ldi 4
+add r0, r3           // R3 = 0000_0100
+ldi 63
+lsl r0, r0
+lsl r0, r0           // R0 = 1111_1100
+and r0, r1
+ldi 6
+bne r1, r3           // checks if MSW already at 000001XX, if not branch to Need to shift
+
+// Done shifting
+DoneShifting#5:
+ldi 0
+lsl r0, r0          // clear carry
+mov r0, r2          // move LSW to R0
+str r0, 2           // store MSW to memory[2]
+
+// Get bias
+ldi 17
+mov r3, r7
+add r0, r3
+lsl r3, r3
+lsl r3, r3
+ldr r1, 5          // load latest MSW in R1
+ldi 3
+and r0, r1         // R1 = 0000_00XX
+orr r1, r3
+ldr r0, 3
+orr r3, r0
+str r0, 3
+
+ldi 0
+and r0, r4
+ldi 9
+bne r0, r4        // guarantee branch to Done
+
+// Need to shift
+// Determine shift left or right (if less than 4, shift left)
+// Check if MSW is greater than 0000_0100
+DetermineShift#6:
+ldi 0
+and r0, r4        // clear R4
+ldi 4
+add r0, r4
+ldr r1, 5         // MSW loaded into R1
+mov r2, r6
+ldi 8
+blt r1, r4        // if MSW < 4, branch to shift left
+
+ShiftRight#7:
+ldi 1
+add r0, r7        // Increment count
+ldi 0
+and r0, r3 
+ldi 0
+lsl r0, r0        // clear carry
+lsr r1, r1
+lsr r2, r2
+ldi 63
+lsl r0, r0
+lsl r0, r0        // R0 = 1111_1100
+and r1, r0
+add r0, r3
+ldi 7 
+bne r3, r4        // checks if 1 in correct digit, if not branch back to shift right
+
+str r1, 5         // store new latest MSW mem[5]
+ldi 0
+and r0, r3        // R3 = 0  to guarantee branch
+ldi 5
+bne r3, r4        // guarantee branch to Done shifting
+
+//Shift left
+ShiftLeft#8: 
+ldi 1
+add r0, r7        // Increment count
+ldi 0
+and r0, r3 
+ldi 0
+lsl r0, r0        // clear carry
+lsl r2, r2
+lsl r1, r1
+ldi 63
+lsl r0, r0
+lsl r0, r0        // R0 = 1111_1100
+and r1, r0
+add r0, r3
+ldi 8
+bne r3, r4        // checks if 1 in correct digit, if not branch back to shift left
+
+str r1, 5         // store new latest MSW mem[5]
+//twos comp of R7
+not r0, r7
+ldi 1
+add r0, r7
+ldi 0
+and r0, r3       // r3 = 0  to guarantee branch
+ldi 5
+bne r3, r4       // guarantee branch to Done shifting
+
+Done#9:
