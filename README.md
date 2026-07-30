@@ -52,12 +52,6 @@ Adds two floating-point values by aligning their exponents, shifting the smaller
 
 ## Simulation
 
-Instructions for selecting
-
-- Machine code
-- Memory initialization
-- Program-specific LUT
-- Done address
 
 
 ## Results
@@ -70,15 +64,7 @@ Instructions for selecting
 ## Repository Structure
 
 ```text
-TopLevel.sv
-ProgramCounter.sv
-InstructionROM.sv
-ControlUnit.sv
-RegFile.sv
-ALU.sv
-DataMem.sv
-Lut.sv
-...
+text
 ```
 
 ## Authors
