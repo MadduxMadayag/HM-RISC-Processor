@@ -96,6 +96,6 @@ Adds two floating-point values by aligning their exponents, shifting the smaller
 - `Assembly/P2Assembly.txt`
 - `Assembly/P3Assembly.txt`
 
-## Authors
+## Contributors
 
 **Maddux Madayag & Yu-Han Lou**
